@@ -86,12 +86,11 @@ and [Tacotron2](https://github.com/NVIDIA/tacotron2) to implement this.
 
 # Additional feature 
 
-Torchscript export usage of pre-trained models for efficient inference
-To export pre-trained model to a .pt file use the following cmd
+Export the pre-trained model using torchscript
 ```
 python export_torchscript.py -p /path/to/chkpt -c /path/to/config -i any_mel.npy --out /path/for/output_pt_file/ 
 ```
-### For inference using torch.jit model use the following code
+### For inference using torchscript model use the following code
 
 ```
 import torch
