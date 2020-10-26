@@ -97,6 +97,8 @@ python export_torchscript.py -p /path/to/chkpt -c /path/to/config -i any_mel.npy
 import torch
 import numpy as np
 from scipy.io.wavfile import write
+MAX_WAV_VALUE = 32768.0
+
 vocoder = torch.jit.load('/path/to/pre-trained_torchscript.pt').cpu()  # load the jit file from path
 vocoder.eval()
 mel = np.load("/path/to/mel.npy")
