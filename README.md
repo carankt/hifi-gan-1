@@ -84,3 +84,33 @@ You can change the path by adding `--output_dir` option.
 We referred to [WaveGlow](https://github.com/NVIDIA/waveglow), [MelGAN](https://github.com/descriptinc/melgan-neurips) 
 and [Tacotron2](https://github.com/NVIDIA/tacotron2) to implement this.
 
+# Additional feature 
+
+Torchscript export usage of pre-trained models for efficient inference
+To export pre-trained model to a .pt file use the following cmd
+```
+python export_torchscript.py -p /path/to/chkpt -c /path/to/config -i any_mel.npy --out /path/for/output_pt_file/ 
+```
+### For inference using torch.jit model use the following code
+
+```
+import torch
+import numpy as np
+from scipy.io.wavfile import write
+vocoder = torch.jit.load('/path/to/pre-trained_torchscript.pt').cpu()  # load the jit file from path
+vocoder.eval()
+mel = np.load("/path/to/mel.npy")
+mel = torch.from_numpy(mel)
+m = mel.unsqueeze(0).cpu()
+wav = vocoder(m)
+wav = wav.squeeze()
+wav = wav * MAX_WAV_VALUE
+wav = wav.detach().cpu().numpy().astype('int16')
+
+write(f"{mel_path}/mel_0_hifigan.wav", 22050, wav)
+```
+
+
+
+
+
