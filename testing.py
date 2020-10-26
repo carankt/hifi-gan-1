@@ -1,7 +1,7 @@
 import torch
 import numpy as np
 from scipy.io.wavfile import write
-from meldataset import mel_spectrogram, MAX_WAV_VALUE, load_wav
+from meldataset import MAX_WAV_VALUE
 
 def main():
     mel_path = "/results/mels_and_audios/FastSpeech2LJ/FS2_tokenwise_v3_para"
