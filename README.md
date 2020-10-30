@@ -111,6 +111,9 @@ wav = wav.detach().cpu().numpy().astype('int16')
 write(f"{mel_path}/mel_0_hifigan.wav", 22050, wav)
 ```
 
+### Running the model for fine tuning on custom dataset
+```sudo python3 train.py --fine_tuning True --config config_v1.json --input_wavs_dir /mnt/Karan/jared_final/wavs_trail_sil_trim/ --input_mels_dir /mnt/Karan/jared_final/preprocessed_trail_trim/gta --input_training_file /mnt/Karan/jared_final/filelists/raw_trail_trim_nopausil_eol/train.txt --input_validation_file /mnt/Karan/jared_final/filelists/raw_trail_trim_nopausil_eol/valid.txt```
+
 
 
 
