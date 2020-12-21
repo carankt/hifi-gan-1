@@ -56,7 +56,7 @@ def mel_spectrogram(y, n_fft, num_mels, sampling_rate, hop_size, win_size, fmin,
     if fmax not in mel_basis:
         mel = librosa_mel_fn(sampling_rate, n_fft, num_mels, fmin, fmax)
         mel_basis[str(fmax)+'_'+str(y.device)] = torch.from_numpy(mel).float().to(y.device)
-        hann_window[str(y.device)] = torch.hann_window(1024).to(y.device)
+        hann_window[str(y.device)] = torch.hann_window(win_size).to(y.device)
 
     y = torch.nn.functional.pad(y.unsqueeze(1), (int((n_fft-hop_size)/2), int((n_fft-hop_size)/2)), mode='reflect')
     y = y.squeeze(1)
@@ -143,7 +143,9 @@ class MelDataset(torch.utils.data.Dataset):
             mel = np.load(
                 os.path.join(self.base_mels_path, os.path.splitext(os.path.split(filename)[-1])[0] + '.npy'))
             mel = torch.from_numpy(mel)
-            mel = mel.squeeze(0)
+
+            if len(mel.shape) < 3:
+                mel = mel.unsqueeze(0)
 
             if self.split:
                 frames_per_seg = math.ceil(self.segment_size / self.hop_size)
